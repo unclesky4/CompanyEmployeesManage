@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="jquery/jquery-2.2.1.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+		<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+		<script src="js/html5shiv.min.js"></script>
+     	<script src="js/respond.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/memberCRUD.js"></script>
+      <script type="text/javascript" src="js/departmentCRUD.js"></script>
+      <script type="text/javascript" src="js/userCRUD.js"></script>
+      <script type="text/javascript" src="js/npm.js"></script>
+      <script type="text/javascript" src="js/positionCRUD.js"></script>
+      <script type="text/javascript" src="js/util.js"></script>
+ 		<script type="text/javascript" src="js/logout.js"></script>
+      
+      <style>
+      	#fonts {font-size: 15px;}
+      	#employee,#position,#user{
+				display:none;      	
+      	}
+      	[id$="_update"],[id$="_delete"],[id$="_add"],#positionAdd,#positionUpdate,#positionDelete,#employee_query{
+      		margin-left: 260px; padding-top: 60px;}
+      	#th {width: 60px;}
+      	[id$="_update"],[id$="_delete"],[id$="_list"],#depart_query{display: none;}
+      	#employee_delete,#employee_query, #employeeUpdate,#employeeQuery {display: none;}
+      	#positionDelete,#positionUpdate,#positionQuery,#depart_member,#position_member {display: none;}
+      	[id$="_add_button"],[id$="update_button"],[id$="_delete_button"] {font-size: 20px;}
+      </style>
+		<title>后台管理</title>
+	</head>
+ 
+	<body style="width:100%;height:100%;">
+		<nav class="navbar navbar-default" role="navigation">
+		    <div class="container-fluid">
+		    <div class="navbar-header">
+		        <a class="navbar-brand" href="#">CRUD</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+		        <ul class="nav navbar-nav" id="ul_1">
+		            <li class="active"><a href="#" id="fonts" onclick="show('department','0')">部门</a></li>
+		            <li><a id="fonts" href="#" onclick="show('employee','1')">成员</a></li>
+		            <li><a id="fonts" href="#" onclick="show('position','2')">职位</a></li>
+		            <li><a id="fonts" href="#" onclick="show('user','3')">用户管理</a></li>
+		            <li><a id="fonts" href="#" style="margin-left:30px;">欢迎登陆：</a></li>
+		            <li><a href="#" id="showUser" style="font-size:16px;"></a></li>
+		            <li><a href="#" style="color:red; font-size:18px;" id="logout">注销</a></li>
+		        </ul>
+		    </div>
+		    </div>
+		</nav>
+		<div id="parent" >
+			<div id="department">
+		  		<ul class="nav nav-tabs" id="depart_ul">
+				 <li class="active"><a href="#" onclick="crud_show('depart_crud','depart_add','depart_ul','0')">添加部门</a></li>
+				 <li><a  href="#" onclick="crud_show('depart_crud','depart_update','depart_ul','1')">修改部门</a></li>
+				 <li><a  href="#" onclick="crud_show('depart_crud','depart_delete','depart_ul','2')">删除部门</a></li>
+				 <li><a  href="#" id="departList" onclick="crud_show('depart_crud','depart_query','depart_ul','3')">查询部门</a></li>
+				 <li><a  href="#"  onclick="crud_show('depart_crud','depart_member','depart_ul','4')">部门员工</a></li>
+				</ul>
+				
+				<div id="depart_crud">
+					<div  id="depart_add"  style="width:600px;margin:50px auto;">
+						<form role="form" class="bs-example bs-example-form">
+						  <div class="input-group input-group-lg" >
+						    <span class="input-group-addon" >部门名称</span>
+						    <input type="text" class="form-control" id="depart_input1" style="width:500px;" placeholder="文本输入(必填)"/>
+						 </div><br/><br/>
+						 <button id="depart_add_button" style="margin-left:200px;width:150px;">添加</button>
+						</form>
+					</div>
+					<div id="depart_update"  style="width:600px;margin:50px auto;">
+						<form role="form" class="bs-example bs-example-form">
+						  <div class="input-group input-group-lg">
+						    <span class="input-group-addon">&nbsp;部门 ID&nbsp;</span>
+						    <input type="text" class="form-control" id="depart_input2_1" style="width:500px;" placeholder="输入非零的正整数(必填)"/>
+						  </div>
+						  <br/>
+						  <div class="input-group input-group-lg">
+						    <span class="input-group-addon span">部门名称</span>
+						    <input type="text" class="form-control" id="depart_input2_2" style="width:500px;" placeholder="输入新的部门名称(必填)"/>
+						  </div>
+						  <br/>
+						  <button id="depart_update_button" style="margin-left:200px;width:150px;">修改</button>
+						</form>
+					</div>
+					<div id="depart_delete"  style="width:600px;margin:50px auto;">
+						<form role="form" class="bs-example bs-example-form">
+						  <div class="input-group input-group-lg">
+						    <span class="input-group-addon span">部门ID</span>
+						    <input type="text" class="form-control" id="depart_input3" placeholder="输入非零的正整数(必填)"/>
+						  </div>
+						  <br/>
+						  <button id="depart_delete_button" style="margin-left:200px;width:150px;">删除</button>
+						</form>
+					</div>
+					<div id="depart_query">
+						<table id="DepartList" class="display" cellspacing="0" width="100%">
+				        <thead>
+				            <tr>
+				                <th>部门ID</th>
+				                <th>部门名称</th>
+				            </tr>
+				        </thead>
+				        <tbody></tbody>
+				    </table>
+					</div>
+					<div id="depart_member">
+						<table id="departMember" class="display" cellspacing="0" width="100%">
+				        <thead>
+				            <tr>
+				                <th>部门ID</th>
+				                <th>部门名称</th>
+				                <th>员工ID</th>
+				                <th>员工姓名</th>
+				                <th>出生日期</th>
+				                <th>性别</th>
+				                <th>住址</th>
+				                <th>职位</th>
+				            </tr>
+				        </thead>
+				        <tbody></tbody>
+				    </table>					
+					</div>
+				</div> 
+				</div>
+				<!--==================================================-->
+			
+				<div id="position">
+		 			<ul class="nav nav-tabs" id="position_ul">
+					 <li class="active"><a href="#" onclick="crud_show('position_crud','positionAdd','position_ul','0')">添加职位</a></li>
+					 <li><a href="#" onclick="crud_show('position_crud','positionUpdate','position_ul','1')">修改职位</a></li>
+					 <li><a href="#" onclick="crud_show('position_crud','positionDelete','position_ul','2')">删除职位</a></li>
+					 <li><a href="#" onclick="crud_show('position_crud','positionQuery','position_ul','3')">查询职位</a></li>
+					 <li><a href="#" onclick="crud_show('position_crud','position_member','position_ul','4')">职位员工</a></li>
+					</ul>
+					<div id="position_crud">
+						<div  id="positionAdd" style="width:600px;margin:50px auto;">
+							<form role="form" class="bs-example bs-example-form">
+							  <div class="input-group input-group-lg" >
+							    <span class="input-group-addon">职位名称</span>
+							    <input type="text" class="depart_input form-control" id="positionName1" placeholder="输入职位名称(必填)"/>
+							 </div><br/>
+							 <button id="position_add_button" style="margin-left:200px;width:150px;">添加</button>
+							</form>
+						</div>
+						<div  id="positionUpdate" style="width:600px;margin:50px auto;">
+							<form role="form" class="bs-example bs-example-form">
+							  <div class="input-group input-group-lg" >
+							    <span class="input-group-addon">&nbsp;职位 ID&nbsp;</span>
+							    <input type="text" class="depart_input form-control" id="positionId2" placeholder="输入非零的正整数(必填)"/><br/>
+							    <br/>
+							  </div><br/>
+							  <div class="input-group input-group-lg" >
+							    <span class="input-group-addon">职位名称</span>
+							    <input type="text" class="depart_input form-control" id="positionName2"  placeholder="新的职位名称(必填)"/><br/><br/>
+							  </div><br/>
+							 <button id="position_update_button" style="margin-left:200px;width:150px;">修改</button>
+							</form>
+						</div>
+						<div  id="positionDelete" style="width:600px;margin:50px auto;">
+							<form role="form" class="bs-example bs-example-form">
+							  <div class="input-group input-group-lg" >
+							    <span class="input-group-addon">职位ID</span>
+							    <input type="text" class="depart_input form-control" id="positionId3" placeholder="输入非零的正整数(必填)" />
+							 </div><br/>
+							 <button id="position_delete_button" style="margin-left:200px;width:150px;">删除</button>
+							</form>
+						</div>
+						<div id="positionQuery" class="display">
+							<table id="PositionList" class="display" cellspacing="0" width="100%">
+						        <thead>
+						            <tr>
+						                <th>职位ID</th>
+						                <th>职位名称</th>
+						            </tr>
+						        </thead>
+						        <tbody></tbody>
+				    		</table>
+					</div>
+					<div id="position_member">
+						<table id="positionMember" class="display" cellspacing="0" width="100%">
+				        <thead>
+				            <tr>
+				                <th>职位ID</th>
+				                <th>职位名称</th>
+				                <th>员工ID</th>
+				                <th>员工姓名</th>
+				                <th>出生日期</th>
+				                <th>性别</th>
+				                <th>住址</th>
+				                <th>部门</th>
+				            </tr>
+				        </thead>
+				        <tbody></tbody>
+				    </table>					
+					</div>
+				</div>
+			</div>
+				
+				<!--==============================================-->
+				<div id="employee">
+		   	 	<ul class="nav nav-tabs" id="employee_ul">
+					 <li class="active"><a href="#" onclick="crud_show('employee_crud','employeeAdd','employee_ul','0')">添加员工</a></li>
+					 <li><a href="#" onclick="crud_show('employee_crud','employeeUpdate','employee_ul','1')">修改员工</a></li>
+					 <li><a href="#" onclick="crud_show('employee_crud','employee_delete','employee_ul','2')">删除员工</a></li>
+					 <li><a href="#" onclick="crud_show('employee_crud','employee_list','employee_ul','3')">所有员工</a></li>
+					</ul>
+					<div id="employee_crud">
+						<div style="width:600px;margin:50px auto;" id="employeeAdd">
+						    <form class="bs-example bs-example-form" role="form">
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">姓&nbsp;&nbsp;名&nbsp;</span>
+						            <input id="uname1" type="text" class="form-control" placeholder="姓名(必填)"/>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">性&nbsp;&nbsp;别&nbsp;</span>
+						            <input id="usex1" type="text" class="form-control" placeholder="女 or 男(必填)"/>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">年&nbsp;&nbsp;龄&nbsp;</span>
+						            <input id="ubirth1" type="text" class="form-control" placeholder="填出生年份(必填)"/>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">住&nbsp;&nbsp;址&nbsp;</span>
+						            <input id="uaddr1" type="text" class="form-control" placeholder="地址(必填)"/>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">部门ID</span>
+						            <input id="udepartId1" type="text" class="form-control" placeholder="输入非负整数(必填)"/>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">职位ID</span>
+						            <input id="upositionId1" type="text" class="form-control" placeholder="输入非负整数(必填)"/>
+						        </div>
+						        <br/>
+						        <button id="employee_add_button" style="margin-left:200px;width:150px;">添加</button>
+						    </form>
+						</div>
+						<div id="employeeUpdate" style="width:600px;margin:50px auto;">
+						    <form class="bs-example bs-example-form" role="form">
+						    	  <div class="input-group input-group-lg" style="width:600px;">
+						            <span class="input-group-addon">员工ID</span>
+						            <input id="uid2" type="text" class="form-control" placeholder="输入非负整数">
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+										<div class="input-group input-group-lg" style="width:500px;float:left;">
+							            <span class="input-group-addon">姓&nbsp;&nbsp;名&nbsp;</span>
+							            <input id="uname2" type="text" class="form-control" placeholder="姓名"/>
+							        	</div>
+							        	<div style="float:right;">
+											<button id="employee_updateName_button" style="height:47px;font-size:15px;width:100px;">修改姓名</button>							        	
+							        	</div>			        
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+						        		<div class="input-group input-group-lg" style="float:left;width:500px;">
+							            <span class="input-group-addon">性&nbsp;&nbsp;别&nbsp;</span>
+							            <input id="usex2" type="text" class="form-control" placeholder="女 or 男"/>
+							        	</div>
+							        	<div style="float:left;">
+											<button id="employee_updateSex_button" style="height:47px;font-size:15px;width:100px;">修改性别</button>							        	
+							        	</div>
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+										<div class="input-group input-group-lg" style="width:500px;float:left;">
+							            <span class="input-group-addon">年&nbsp;&nbsp;龄&nbsp;</span>
+						            <input id="ubirth2" type="text" class="form-control" placeholder="填出生年份"/>
+							        	</div>
+							        	<div style="float:right;">
+											<button id="employee_updateBirth_button" style="height:47px;font-size:15px;width:100px;">修改年龄</button>							        	
+							        	</div>			        
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+										<div class="input-group input-group-lg" style="width:500px;float:left;">
+							            <span class="input-group-addon">住&nbsp;&nbsp;址&nbsp;</span>
+						            	<input id="uaddr2" type="text" class="form-control" placeholder="地址"/>
+							        	</div>
+							        	<div style="float:right;">
+											<button id="employee_updateAddr_button" style="height:47px;font-size:15px;width:100px;">修改住址</button>							        	
+							        	</div>			        
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+										<div class="input-group input-group-lg" style="width:500px;float:left;">
+							            <span class="input-group-addon">部门ID</span>
+						            	<input id="udepartId2" type="text" class="form-control" placeholder="输入非负整数"/>
+							        	</div>
+							        	<div style="float:right;">
+											<button id="employee_updateDepartId_button" style="height:47px;font-size:15px;width:100px;">修改部门ID</button>							        	
+							        	</div>			        
+						        </div>
+						        <br/>
+						        <div class="input-group input-group-lg" style="width:600px;">
+										<div class="input-group input-group-lg" style="width:500px;float:left;">
+							           	<span class="input-group-addon">职位ID</span>
+						              	<input id="upositionId2" type="text" class="form-control" placeholder="输入非负整数"/>
+							        	</div>
+							        	<div style="float:right;">
+											<button id="employee_updatePositionId_button" style="height:47px;font-size:15px;width:100px;">修改职位ID</button>							        	
+							        	</div>			        
+						        </div>
+						    </form>
+						</div>
+						
+						<div  id="employee_delete"  style="width:600px;margin:50px auto;">
+							<form role="form" class="bs-example bs-example-form">
+							  	<div class="input-group input-group-lg">
+								    <span class="input-group-addon">员工ID</span>
+								    <input type="text" class="form-control employee_input3" id="uid3" placeholder="输入非负整数"/>
+							  	</div><br/><br/>
+							 	<button id="employee_delete_button" style="margin-left:200px;width:150px;">删除</button>
+							</form>
+						</div>
+						 
+						<div id="employee_list">	
+							<table id="EmployeeList" class="display" cellspacing="0" width="100%">
+					        <thead>
+					            <tr>
+					                <th>ID</th>
+					                <th>姓名</th>
+					                <th>出生日期</th>
+					                <th>性别</th>
+					                <th>住址</th>
+					                <th>部门</th>
+					                <th>职位</th>
+					            </tr>
+					        </thead>
+					        <tbody></tbody>
+				   	 	</table>
+						</div>
+					</div>
+				</div>
+				<!--========================================= -->
+				<div id="user">
+		   	 	<ul class="nav nav-tabs" id="user_ul">
+					 <li class="active"><a href="#" onclick="crud_show('user_crud','user_add','user_ul','0')">添加用户</a></li>
+					 <li><a href="#" onclick="crud_show('user_crud','user_update','user_ul','1')">修改用户</a></li>
+					 <li><a href="#" onclick="crud_show('user_crud','user_delete','user_ul','2')">删除用户</a></li>
+					 <li><a href="#" onclick="crud_show('user_crud','user_list','user_ul','3')">所有用户</a></li>
+					 <li><a href="#" onclick="crud_show('user_crud','role_list','user_ul','4')">角色列表</a></li>
+					</ul>
+					<div id="user_crud">
+						<div id="user_add" style="width:650px;margin:0 auto;">
+							<div class="input-group input-group-lg">
+								  <span class="input-group-addon">&nbsp;用&nbsp;户&nbsp;名&nbsp;</span>
+								  <input type="text" id="username1" class="form-control" placeholder="Username">
+							</div><br/>
+							<div class="input-group input-group-lg">
+								  <span class="input-group-addon">&nbsp;&nbsp;密 &nbsp;&nbsp;码&nbsp;&nbsp;</span>
+								  <input type="password" id="userpasswd1_1" class="form-control" placeholder="password">
+							</div><br/>
+							<div class="input-group input-group-lg">
+								  <span class="input-group-addon">确认密码</span>
+								  <input type="password" id="userpasswd1_2"  class="form-control" placeholder="password">
+							</div><br/>	
+							<div class="input-group input-group-lg btn-group">
+								  <span class="input-group-addon">用户角色</span>
+								  <button type="button" class="btn" id="role" style="width:420px;height:50px;border:1px solid #cccccc;"></button>
+								  <button type="button" class="btn  dropdown-toggle" id="get_role" data-toggle="dropdown"  style="width:125px;height:50px;border:1px solid #cccccc;">
+								    <span class="caret"></span>
+								    <span class="sr-only">Toggle Dropdown</span>
+								  </button>
+								  <ul class="dropdown-menu" id="show_role" role="menu">
+								    <li><a href="#">Action</a></li>
+								    <li><a href="#">Another action</a></li>
+								    <li><a href="#">Something else here</a></li>
+								    <li><a href="#">Separated link</a></li>
+								  </ul>
+							</div><br/>
+							<div id="role_desc" style="font-size:20px;color:red;text-align:center;"></div><br/><br/>
+							<button type="button" id="user_add_button" class="btn btn-primary" style="margin-left:200px;width:200px;font-size:22px;">添加</button>					
+						</div>
+						<div id="user_update" style="width:650px;margin:0 auto;">
+						
+							<div class="input-group input-group-lg">
+							    <span class="input-group-addon">用户ID：</span>
+							    <input type="text" class="form-control" id="user_input2_1" placeholder="输入非负整数(必填)"/>
+							 </div><br/><br/>
+							 
+							 <div style="border-style: ridge;background:#E0EEE0;padding:2px;">
+							 	<br/>
+							 	<div class="input-group input-group-lg">
+					            <span class="input-group-addon">用户名：</span>
+					            <input id="user_input2_2" type="text" class="form-control" placeholder="新的用户名"/>
+					        	</div>
+					        	<br/>
+					        	<button id="user_updateusername_button" style="margin-left:250px;width:150px;">修改用户名</button><br/><br/>
+							 </div><br/>
+							 
+					       <div style="border-style: ridge;background:#E0EEE0;padding:2px;">
+					       	<br/>
+						      <div class="input-group input-group-lg">
+						         <span class="input-group-addon">&nbsp;&nbsp;密&nbsp; 码：</span>
+						         <input id="user_input2_3" type="password" class="form-control" placeholder="新的密码"/>
+						      </div>
+						      <br/>
+						      <button id="user_updatepassword_button" style="margin-left:250px;width:150px;">修改密码</button><br/><br/>		
+						    </div>
+						</div>
+						<div id="user_delete" style="width:650px;margin:10px auto;">
+							<form role="form" class="bs-example bs-example-form">
+							  <div class="input-group input-group-lg">
+							    <span class="input-group-addon">用户ID：</span>
+							    <input type="text" class="form-control" id="user_input3" placeholder="输入非负整数(必填)"/>
+							  </div>
+							  <br/>
+							  <br/>
+							  <br/>
+							  <button id="user_delete_button" style="margin-left:200px;width:150px;">删除</button>
+							</form>						
+						</div>
+						<div id="user_list">
+							<table id="userList" class="display" cellspacing="0" width="100%">
+						        <thead>
+						            <tr>
+						                <th>用户ID</th>
+						                <th>用户名</th>
+						                <th>密码</th>
+						                <th>角色</th>
+						                <th>角色描述</th>
+						            </tr>
+						        </thead>
+						        <tbody></tbody>
+						    </table>				
+						</div>
+						<div id="role_list">
+							<table id="roleList" class="display" cellspacing="0" width="100%">
+						        <thead>
+						            <tr>
+						                <th>角色ID</th>
+						                <th>角色名</th>
+						                <th>角色描述</th>
+						            </tr>
+						        </thead>
+						        <tbody></tbody>
+						    </table>				
+						</div>				
+					</div>
+				</div>
+		</div>
+	</body>
+</html>
