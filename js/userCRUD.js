@@ -240,7 +240,6 @@ $(document).ready(function () {
 	$("#roleList").DataTable( {
 		"processing": true,
       "serverSide": true,
-      "language": {"search": "用户名: _INPUT_"},
 		"ajax": {
 			"url": "php/role_list.php",
 			"type": "POST"

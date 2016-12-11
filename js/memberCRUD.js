@@ -35,7 +35,6 @@ $(document).ready(function () {
 				alert("请正确填入职位ID！");
 				return ;			
 			}
-			
 			$.ajax({
 				url:"php/member_add.php",
 				type:"POST",
@@ -55,7 +54,9 @@ $(document).ready(function () {
 						$("#upositionId1").val("");
 					}else if (result === "2") {
 						alert("添加失败！请检查部门ID和职位ID是否已存在！");
-					}else {}
+					}else if(result === "2"){
+						alert("未登陆!");					
+					}
 				},
 				error:function(){
 					alert("error");				

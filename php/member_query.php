@@ -49,7 +49,7 @@
 	    $limitSql = " limit ".intval($start).",".intval($length);
 	}
 	
-	$Depart_id = intval($_SESSION['DepartId']);
+	$Depart_id = $_SESSION['DepartId'];
 	//定义查询数据总记录数sql
 	$sumSql = "select count(id) as sum from member";
 	$sqlWhere = " where Department_id=department.id and department.id='$Depart_id' and position.id=Position_id ";
