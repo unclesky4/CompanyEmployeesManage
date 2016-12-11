@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	$.ajax({
+	$.ajax({   //加载选项
 		url: "php/init.php",
 		type: "POST",
 		data:"",
@@ -10,9 +10,7 @@ $(document).ready(function () {
 		error: function () {
 			alert("error");		
 		}	
-	});	
-	
-	
+	});
 	$("#depart_add_button").click(function () {   //添加部门
 	//	alert("ok");
 		if($("#depart_input1").val() ===  ""){

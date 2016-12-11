@@ -30,6 +30,7 @@
       	#employee_delete,#employee_query, #employeeUpdate,#employeeQuery {display: none;}
       	#positionDelete,#positionUpdate,#positionQuery,#depart_member,#position_member {display: none;}
       	[id$="_add_button"],[id$="update_button"],[id$="_delete_button"] {font-size: 20px;}
+      	ima {margin-top: 5px;}
       </style>
 		<title>后台管理</title>
 	</head>
@@ -47,6 +48,7 @@
 		            <li><a id="fonts" href="#" onclick="show('position','2')">职位</a></li>
 		            <li><a id="fonts" href="#" onclick="show('user','3')">用户管理</a></li>
 		            <li><a id="fonts" href="#" style="margin-left:30px;">欢迎登陆：</a></li>
+		            <li><img src="images/login.png" width="35px" height="35px" /></li>
 		            <li><a href="#" id="showUser" style="font-size:16px;"></a></li>
 		            <li><a href="#" style="color:red; font-size:18px;" id="logout">注销</a></li>
 		        </ul>
@@ -233,14 +235,32 @@
 						            <input id="uaddr1" type="text" class="form-control" placeholder="地址(必填)"/>
 						        </div>
 						        <br/>
+						        <!--
 						        <div class="input-group input-group-lg">
 						            <span class="input-group-addon">部门ID</span>
 						            <input id="udepartId1" type="text" class="form-control" placeholder="输入非负整数(必填)"/>
 						        </div>
+						        -->
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">部&nbsp;&nbsp;&nbsp;门</span>
+						            <select id="selectDepartment" style="width:515px;height:50px;font-size:16px;">
+											<option value="volvo">Volvo</option>
+											<option value="saab">Saab</option>
+										</select>
+						        </div>
 						        <br/>
+						        <!--
 						        <div class="input-group input-group-lg">
 						            <span class="input-group-addon">职位ID</span>
 						            <input id="upositionId1" type="text" class="form-control" placeholder="输入非负整数(必填)"/>
+						        </div>
+						        -->
+						        <div class="input-group input-group-lg">
+						            <span class="input-group-addon">职&nbsp;&nbsp;&nbsp;位</span>
+						            <select id="selectPosition" style="width:515px;height:50px;font-size:16px;">
+											<option value="volvo">Volvo</option>
+											<option value="saab">Saab</option>
+										</select>
 						        </div>
 						        <br/>
 						        <button id="employee_add_button" style="margin-left:200px;width:150px;">添加</button>
