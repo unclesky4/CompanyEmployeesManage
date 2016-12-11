@@ -32,7 +32,7 @@
 			}	
 	}else{
 		while($row = mysql_fetch_array($result)) {
-			if($row['Department_id'] === $_SESSION['DepartId']) {
+			if(intval($row['Department_id']) === $_SESSION['DepartId']) {
 				$bool_id = true;
 				break;		
 			}	

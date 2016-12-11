@@ -24,7 +24,6 @@
 		return;	
 	}
 	$sql = "update `member` set `name`='$name' where `id`='$id'";
-	echo gettype($_SESSION['DepartId']);
 	if($_SESSION['DepartId'] === -1) {   //判断是否是administrator角色
 			if(mysql_query($sql)) {
 				echo "修改成功！";
@@ -33,7 +32,7 @@
 			}	
 	}else{
 		while($row = mysql_fetch_array($result)) {
-			if($row['Department_id'] === $_SESSION['DepartId']) {
+			if(intval($row['Department_id']) === $_SESSION['DepartId']) {
 				$bool_id = true;
 				break;		
 			}	
