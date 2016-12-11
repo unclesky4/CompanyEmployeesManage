@@ -69,14 +69,11 @@
 	
 	//定义过滤条件查询过滤后的记录数sql
 	if($Depart_id === -1) {
-		$sumSqlWhere =" where (member.id like '%".$search."%' or member.name like '%".$search."%' or birth like '%".$search."%' or addr like '%".$search."%'";
-		$sumSqlWhere = $sumSqlWhere." or sex like '%".$search."%') and position.id=Position_id and department.id=Department_id";	
+		$sumSqlWhere = " where position.id=Position_id and department.id=Department_id)";	
 	}else {
-		$sumSqlWhere =" where (member.id like '%".$search."%' or member.name like '%".$search."%' or birth like '%".$search."%' or addr like '%".$search."%'";
-		$sumSqlWhere = $sumSqlWhere." or sex like '%".$search."%') and department.id='$Depart_id' and position.id=Position_id and department.id=Department_id";
+		$sumSqlWhere =" Department_id='$Depart_id' and position.id=Position_id and department.id=Department_id";
 	}	
 	if(strlen($search)>0){
-		
 	    $recordsFilteredResult = mysql_query($sumSql.$sumSqlWhere);
 	    while ($row = mysql_fetch_array($recordsFilteredResult)) {
 	        $recordsFiltered =  $row['sum'];

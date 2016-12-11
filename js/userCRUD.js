@@ -239,7 +239,7 @@ $(document).ready(function () {
 	*/
 	$("#roleList").DataTable( {
 		"processing": true,
-      "serverSide": true,
+      "serverSide": false,
 		"ajax": {
 			"url": "php/role_list.php",
 			"type": "POST"

@@ -312,6 +312,7 @@ $(document).ready(function () {
 		$("#EmployeeList").DataTable({
 			"processing": true,
 	      "serverSide": true,
+	      "searching": false,
 			"ajax": {
 				"url": "php/member_query.php",
 				"type": "POST"
