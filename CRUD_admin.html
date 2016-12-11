@@ -243,7 +243,7 @@
 						        -->
 						        <div class="input-group input-group-lg">
 						            <span class="input-group-addon">部&nbsp;&nbsp;&nbsp;门</span>
-						            <select id="selectDepartment" style="width:515px;height:50px;font-size:16px;">
+						            <select id="selectDepartment" style="width:515px;height:50px;font-size:16px;border:1px solid #cccccc;">
 											<option value="volvo">Volvo</option>
 											<option value="saab">Saab</option>
 										</select>
@@ -257,7 +257,7 @@
 						        -->
 						        <div class="input-group input-group-lg">
 						            <span class="input-group-addon">职&nbsp;&nbsp;&nbsp;位</span>
-						            <select id="selectPosition" style="width:515px;height:50px;font-size:16px;">
+						            <select id="selectPosition" style="width:515px;height:50px;font-size:16px;border:1px solid #cccccc;">
 											<option value="volvo">Volvo</option>
 											<option value="saab">Saab</option>
 										</select>
@@ -385,7 +385,8 @@
 							<div class="input-group input-group-lg">
 								  <span class="input-group-addon">确认密码</span>
 								  <input type="password" id="userpasswd1_2"  class="form-control" placeholder="password">
-							</div><br/>	
+							</div><br/>
+							<!--	
 							<div class="input-group input-group-lg btn-group">
 								  <span class="input-group-addon">用户角色</span>
 								  <button type="button" class="btn" id="role" style="width:420px;height:50px;border:1px solid #cccccc;"></button>
@@ -399,7 +400,17 @@
 								    <li><a href="#">Something else here</a></li>
 								    <li><a href="#">Separated link</a></li>
 								  </ul>
-							</div><br/>
+							</div>
+							-->
+							<div class="input-group input-group-lg">
+				            <span class="input-group-addon">用户角色</span>
+				            <select id="selectRole" style="width:543px;height:50px;border:1px solid #cccccc;">
+									<option value="volvo">Volvo</option>
+									<option value="saab">Saab</option>
+								</select>
+				        	</div>						
+							
+							<br/>
 							<div id="role_desc" style="font-size:20px;color:red;text-align:center;"></div><br/><br/>
 							<button type="button" id="user_add_button" class="btn btn-primary" style="margin-left:200px;width:200px;font-size:22px;">添加</button>					
 						</div>

@@ -2,41 +2,36 @@ $(document).ready(function () {
 	/*
 	*	获得角色	
 	*/	
-	var description = new Array();
-	var roleArray = new Array();
-	var role_id = new Array();
-	var index = 0;
-	var role = "";
-	var bool = true;
-	$("#get_role").mousedown(function () {  
-		var tmp = "";
-		$.ajax({
-				url: "php/get_role.php",
-				dataType: "json",
-				type: "POST",
-				data: "",
-				success: function (result) {
-					bool = false;
-					$.each(result.data,function (idx,item) {
-					     tmp = tmp+"<li><a href=# id='role_menu'>"+item.role+"</a></li>";
-					     roleArray.push(item.role);
-					     role_id.push(item.id);
-					     description.push(item.description);
-					})
-					$("#show_role").html(tmp);
-					$("#show_role").children('li').click(function () {
-						index = $(this).index();
-						$("#role_desc").html(description[index]);
-						$("#role").html(roleArray[index]);
-						role = roleArray[index];
-					});
-					
-				},
-				error: function () {
-					alert("error");		
-				}	
-			});	
-	});
+	var roleOption = "";  //存储角色的option列表
+	var Description = new Array();  //存储角色的描述信息
+	var roleId = new Array();   //存储角色的id
+	var RId = -1;  //存储用户选择的角色id
+	var roleIndex = -1;
+	alert("a00");
+	$.ajax({
+			url: "php/get_role.php",
+			dataType: "json",
+			type: "POST",
+			data: "",
+			success: function (result) {
+				$.each(result.data,function (idx,item) {
+				     Description.push(item.description);
+				     roleId.push(item.id);
+				     roleOption = roleOption+"<option>"+item.role+"</option>";
+				     roleId.push(item.id);
+				})
+				$("#selectRole").html(roleOption);
+				$("#selectRole").children('option').click(function () {
+					roleIndex = $(this).index();
+					RId = roleId[roleIndex];
+					$("#role_desc").html(Description[roleIndex]);
+				});
+				
+			},
+			error: function () {
+				alert("error");		
+			}	
+		});
 	
 	/*
 	*	添加用户	
@@ -59,20 +54,28 @@ $(document).ready(function () {
 			alert("密码不一致 !");
 			return;		
 		}
+		/*
 		if (role === "") {
 			alert("请选择角色！");
 			return ;		
+		}*/
+		
+		if(RId === -1){
+			alert("请选择角色！");
+			return;		
 		}
 		$.ajax({
 			url: "php/user_add.php",
 			async: false,
 			type: "POST",
-			data: "name="+username+"&password="+passwd1+"&role_id="+role_id[index],
+			data: "name="+username+"&password="+passwd1+"&role_id="+RId,
 			success: function (result) {
 				if (result === "1") {
 					alert("添加成功！");
-					$("#userpasswd1_1").val("");
-					$("#userpasswd1_2").val("");
+			//		$("#userpasswd1_1").val("");
+			//		$("#userpasswd1_2").val("");
+					RId = -1;
+					roleIndex = -1
 				}else if (result === "2") {
 					alert("添加失败！");
 				}else if (result === "0") {
