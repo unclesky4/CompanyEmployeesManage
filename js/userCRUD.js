@@ -7,7 +7,6 @@ $(document).ready(function () {
 	var roleId = new Array();   //存储角色的id
 	var RId = -1;  //存储用户选择的角色id
 	var roleIndex = -1;
-	alert("a00");
 	$.ajax({
 			url: "php/get_role.php",
 			dataType: "json",
